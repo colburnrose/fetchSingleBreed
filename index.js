@@ -2,18 +2,20 @@
 
 function getDogImage(breed) {
   let URL = `https://dog.ceo/api/breed/${breed}/images/random`;
-  fetch(URL)
-    .then((response) => response.json())
-    .then((responseJson) => displayResults(responseJson))
-    .catch((error) => alert("Something went wrong. Try again later."));
+  if (URL) {
+    fetch(URL)
+      .then((response) => response.json())
+      .then((responseJson) => displayResults(responseJson))
+      .catch((error) => alert("Something went wrong. Try again later."));
+  }
 }
 
 function displayResults(responseJson) {
   console.log(responseJson);
   //replace the existing image with the new one
-  if (responseJson.code === "404") {
+  if (responseJson.status === "error") {
     $(".results-img").html(
-      `<p>statusCode: '404', message: 'Breed not found!' </p>`
+      `<p>status: '404', message: 'A bad breed you have requested!' </p>`
     );
   } else {
     $(".results-img").html(
