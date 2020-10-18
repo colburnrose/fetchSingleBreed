@@ -4,7 +4,12 @@ function getDogImage(breed) {
   let URL = `https://dog.ceo/api/breed/${breed}/images/random`;
   if (URL) {
     fetch(URL)
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error(response.statusText);
+      })
       .then((responseJson) => displayResults(responseJson))
       .catch((error) => alert("Something went wrong. Try again later."));
   }
